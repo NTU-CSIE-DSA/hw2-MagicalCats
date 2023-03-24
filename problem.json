@@ -1,0 +1,12 @@
+{
+    "name": "cat",
+    "code": "cat",
+    "title": "magic_dsa_cat",
+    "type": "Batch",
+    "has_grader": false,
+    "java_enabled": false,
+    "python_enabled": false,
+    "time_limit": 2.5,
+    "memory_limit": 1048576,
+    "description": "Task description"
+}
