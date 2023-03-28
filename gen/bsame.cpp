@@ -73,6 +73,8 @@ int main(int argc, char *argv[]) {
 
     unordered_map<int, ord_set> batree;
     map<int, int> amap;
+    int minL = 1;
+    int maxR = R;
     for (int i = 0; i < N; i++) {
         batree[b[i]].insert(a[i]);
         amap[a[i]] = i;
@@ -84,8 +86,8 @@ int main(int argc, char *argv[]) {
         if(i + 20 >= M) op = 1;
         if (op == 1) {
             int x = b[rnd.next(0, N - 1)];
-            int l = rnd.next(1, R);
-            int r = rnd.next(1, R);
+            int l = rnd.next(minL, maxR);
+            int r = rnd.next(minL, maxR);
             if (r < l) swap(l, r);
             if (rnd.next(1,30) == 1) x = rnd.next(1, R);
             printf("%d %d %d %d\n", op, x, l, r);
@@ -139,6 +141,8 @@ int main(int argc, char *argv[]) {
                     batree[x].insert(newv);
                     amap[newv] = ind;
                 }
+                minL = min(minL , newv);
+                maxR = max(maxR , newv);
             }
         }
     }

@@ -27,9 +27,9 @@ int main() {
 		if(op == 1){
 			inf.readInt(1, 1000000000,"x");
 			inf.readSpace();
-			int l = inf.readInt(1, 1000000000,"l");
+			int l = inf.readInt(-2000000000, 2000000000,"l");
 			inf.readSpace();
-			int r = inf.readInt(1, 1000000000,"r");
+			int r = inf.readInt(-2000000000, 2000000000,"r");
 			inf.readEoln();
 			ensuref(r >= l ,"r >= l");
 		}else if(op == 2){
