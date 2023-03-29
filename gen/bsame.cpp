@@ -117,9 +117,9 @@ int main(int argc, char *argv[]) {
             int x = b[rnd.next(0, N - 1)];
             int h = 0;
             int ts = rnd.next(1, (int)batree[x].size());
+            int s = rnd.next(0, 1);
+            int t = rnd.next(0, 1);
             for(;h<ts && i<M-20;h++,i++){
-                int s = rnd.next(0, 1);
-                int t = rnd.next(0, 1);
                 printf("%d %d %d %d\n", op, x, s, t);
                 int newv;
                 if (t)

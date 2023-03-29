@@ -19,6 +19,8 @@ for fn in glob.glob('tests/*.in'):
     dic['testdata'][int(g)]['tests'].append(fn[:-3])
     if int(g) in [0,1,2,3]:
         dic['testdata'][int(4)]['tests'].append(fn[:-3])
+    if int(g) == 0:
+        dic['testdata'][int(1)]['tests'].append(fn[:-3])
 for ts in dic['testdata']:
     ts['tests'].sort()
 with open('meta.json' , 'w') as f:
