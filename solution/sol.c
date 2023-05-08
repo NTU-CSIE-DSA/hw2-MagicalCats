@@ -6,7 +6,7 @@
 #define MXSZ 300008
 typedef struct cat {
     int app, color, id;
-    struct cat *prev, *next; // sorted appetite linked list
+    struct cat *prev, *next;  // sorted appetite linked list
 } Cat;
 
 int N, M;
@@ -48,7 +48,7 @@ void swap(int *x, int *y) {
 }
 
 Cat *deq_at(Deq *dq, int idx) {
-    // Access dq's i'th element 
+    // Access dq's i'th element
     if (dq->l < 0) dq->l = dq->l % dq->cap + dq->cap;
     return &cats[dq->st + ((idx + dq->l) % dq->cap)];
 }
@@ -56,7 +56,7 @@ Cat *deq_back(Deq *dq) {
     if (dq->r <= 0) dq->r = dq->r % dq->cap + dq->cap;
     return &cats[dq->st + ((dq->r - 1) % dq->cap)];
 }
-Cat *dq_front(Deq *dq) {
+Cat *deq_front(Deq *dq) {
     if (dq->l < 0) dq->l = dq->l % dq->cap + dq->cap;
     return &cats[dq->st + dq->l % dq->cap];
 }
@@ -90,11 +90,12 @@ int main() {
     for (int i = 0; i < N; i++) scanf("%d", &color[i]);
     for (int i = 0; i < N; i++) app_sort[i] = i, cats[i].app = app[i], cats[i].color = color[i], cats[i].id = i;
 
-    qsort(cats, N, sizeof(Cat), cat_cmp); // sort by (appetite, color)
+    qsort(cats, N, sizeof(Cat), cat_cmp);  // sort by (appetite, color)
 
-    qsort(app_sort, N, sizeof(int), app_cmp); // sort indices array by appetite
+    qsort(app_sort, N, sizeof(int), app_cmp);  // sort indices array by appetite
 
-    // Create sorted appetite linked list's head and tail, we will instead link the struct cat directly 
+    // Create sorted appetite linked list's head and tail,
+    //  we will instead link the struct cat directly
     head.next = &cats[app_sort[0]];
     cats[app_sort[0]].prev = &head;
     head.app = INT_MIN;
@@ -102,15 +103,15 @@ int main() {
     tail.app = INT_MAX;
     cats[app_sort[N - 1]].next = &tail;
 
-    int cnt_color = 0; 
+    int cnt_color = 0;
     // link the appetite linked list , and count number of each color
     for (int i = 1; i < N; i++) {
         cats[app_sort[i - 1]].next = &cats[app_sort[i]];
         cats[app_sort[i]].prev = &cats[app_sort[i - 1]];
         if (cats[i].color != cats[i - 1].color) cnt_color++;
     }
-    // Create deque for each color , we will use the space of cats array. 
-    // Since cats array is sorted, and deque size will not change, we only need to record what range a deque will use in struct Deq. 
+    // Create deque for each color , we will use the space of cats array.
+    // Since cats array is sorted, and deque size will not change, we only need to record what range a deque will use in struct Deq.
     catdeq = (Deq *)malloc(sizeof(Deq) * (cnt_color + 8));
     memset(catdeq, 0, sizeof(Deq) * (cnt_color + 8));
 
@@ -137,14 +138,14 @@ int main() {
         if (op == 1) {
             int x, l, r;
             scanf("%d%d%d", &x, &l, &r);
-            int *bs = (int *)bsearch(&x, deq_colors, deqsz, sizeof(int), intcmp); // find color deque
+            int *bs = (int *)bsearch(&x, deq_colors, deqsz, sizeof(int), intcmp);  // find color deque
             if (bs == NULL) {
                 printf("0\n");
                 continue;
             }
             int dq_idx = bs - deq_colors;
             Cat tmp;
-            assigncat(&tmp, l, x); // create a dummy cat for binary search 
+            assigncat(&tmp, l, x);  // create a dummy cat for binary search
             int itl = lower_bound(&catdeq[dq_idx], 0, catdeq[dq_idx].cap, &tmp);
             assigncat(&tmp, r, x);
             int itr = upper_bound(&catdeq[dq_idx], 0, catdeq[dq_idx].cap, &tmp);
@@ -153,17 +154,17 @@ int main() {
             int k;
             scanf("%d", &k);
             Cat tmp;
-            assigncat(&tmp, app[k], color[k]); // create a dummy cat for binary search 
+            assigncat(&tmp, app[k], color[k]);  // create a dummy cat for binary search
             int *bs = (int *)bsearch(&color[k], deq_colors, deqsz, sizeof(int), intcmp);
             int dq_idx = bs - deq_colors;
 
-            int idx = lower_bound(&catdeq[dq_idx], 0, catdeq[dq_idx].cap, &tmp);//cat index in deque
+            int idx = lower_bound(&catdeq[dq_idx], 0, catdeq[dq_idx].cap, &tmp);  // cat index in deque
             Cat *ptr1 = deq_at(&catdeq[dq_idx], idx);
             Cat *ptr2 = ptr1->next;
             int k2 = ptr2->id;
 
             if (ptr1->color != ptr2->color) {
-                //swap in deque and linked list
+                // swap in deque and linked list
                 swap(&ptr1->app, &ptr2->app);
                 ptr1->next = ptr2->next;
                 ptr2->prev = ptr1->prev;
@@ -171,9 +172,9 @@ int main() {
                 if (ptr2->prev) ptr2->prev->next = ptr2;
                 ptr1->prev = ptr2;
                 ptr2->next = ptr1;
-            } else // if cats' color are same, swap id instead
-                swap(&ptr1->id, &ptr2->id);
-            swap(&app[k], &app[k2]); // array to find appetite by index
+            } else
+                swap(&ptr1->id, &ptr2->id);  // if cats' color are same, swap id instead
+            swap(&app[k], &app[k2]);         // array to find appetite by index
         } else {
             int x, s, t;
             scanf("%d%d%d", &x, &s, &t);
@@ -183,15 +184,15 @@ int main() {
             if (s) {
                 ptr = deq_back(&catdeq[dq_idx]);
                 if (!t) {
-                    //pop back, push front 
+                    // pop back, push front
                     catdeq[dq_idx].l--;
                     catdeq[dq_idx].r--;
                 }
                 ptr->app = newv;
             } else {
-                ptr = dq_front(&catdeq[dq_idx]);
+                ptr = deq_front(&catdeq[dq_idx]);
                 if (t) {
-                    //push back, pop front 
+                    // push back, pop front
                     catdeq[dq_idx].l++;
                     catdeq[dq_idx].r++;
                 }
