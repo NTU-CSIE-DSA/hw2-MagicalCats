@@ -31,7 +31,6 @@ Finding the magic target cost $O(logN)$ time and manipulating deque/linked list 
 ## Coding Tips
 1. We can encapsulate the deque data structure and access it with indices [0...n-1]. Otherwise, the binary search would be difficult to implement.
 2. Implement lower bound and upper bound binary search separately.
-3. For a relatively concise implementation, please refer to the solution.
 
 ## Solution
 
