@@ -10,7 +10,7 @@ Keywords: `sorting`, `binary search`, `circular array`, `linked list`
 All preprocessing can be done in $O(NlogN)$ time.
 ## Questioning step
 
-1. For each query $(c_i,l_i,r_i)$, apply binary search to find the lower bound and upper bound in the according **color deque**. The answer is the number of elements within two bounds.
+1. For each query $(c_i,l_i,r_i)$, apply binary search to find the lower bound and upper bound in the corresponding **color deque**. The answer is the number of elements within two bounds.
 
 This step can be done in $O(logN)$ time.
 
