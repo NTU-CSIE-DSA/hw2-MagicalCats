@@ -16,20 +16,20 @@ This step can be done in $O(logN)$ time.
 
 ## Swapping step
 1. Notice that all cats have unique appetite values and the two swapping cats have "adjacent" appetites.
-2. By 1. we can directly swap two cats' appetites while keeping the sorted order of **color arrays** and **appetite linked lists**. 
-3. Be careful that if two cats have the same color, we cannot swap the appetites directly because the sorted order would be invalid. We can swap indices instead.
+2. By 1. we can directly swap two cats' appetites while keeping the sorted order of **color deques** and **appetite linked lists**. 
+3. Be careful that if two cats have the same color, we cannot swap the appetites directly because the sorted order would be invalid. We can swap their indices instead.
 
 Finding the swapping target cost $O(logN)$ time, and swapping can be done in $O(1)$ time.
 ## Magic step
 
 For each magic step,
-1. Find the max/min appetite in all cats by the sorted appetite linked list to compute the value after magic.
+1. Find the max/min appetite in all cats by the sorted appetite linked list's head/tail to compute the value after magic.
 2. Find the **color deque**, pop the cat from front/back, and push the cat with new appetite value to front/back.
-3. Find the cat in appetite in **appetite linked list**, remove it, and insert it to the head/tail of **appetite linked list**.
+3. Find the cat in **appetite linked list**, remove it, and insert it to the head/tail of **appetite linked list**.
 
 Finding the magic target cost $O(logN)$ time and manipulating deque/linked list cost $O(1)$ time.
 ## Coding Tips
-1. We can encapsulate the deque data structure and access it with indices [0...n-1]. Otherwise, the binary search would be difficult to implement.
+1. We can encapsulate the deque(circular array) data structure and access it with indices [0...size-1]. Otherwise, the binary search would be difficult to implement.
 2. Implement lower bound and upper bound binary search separately.
 
 ## Solution
